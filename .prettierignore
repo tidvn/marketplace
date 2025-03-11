@@ -1,0 +1,7 @@
+src/components/ui/*
+build/*
+dist/*
+public/*
+**/out/*
+**/.next/*
+**/node_modules/*
