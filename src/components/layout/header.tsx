@@ -1,9 +1,7 @@
 "use client";
 
-import { CardanoWallet } from "@meshsdk/react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
-
+import { CardanoWallet } from "@/components/common/cardano-wallet";
 
 function Header() {
   return (
@@ -11,8 +9,7 @@ function Header() {
       <Link href="/" className="text-lg font-semibold">
         Cardano Marketplace
       </Link>
-      <Button variant="destructive">Click me</Button>
-      <CardanoWallet isDark={false} persist={true} />
+      <CardanoWallet />
     </header>
   );
 }
