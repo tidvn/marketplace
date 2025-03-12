@@ -2,7 +2,6 @@
 import { NftCard } from "@/components/app/nft-card";
 import { get } from "@/lib/axios";
 import { NFT } from "@/types";
-import { TrendingUp } from "lucide-react";
 import useSWR from "swr";
 
 export default function Home() {
@@ -16,10 +15,6 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
-              <div className="flex items-center gap-1">
-                <TrendingUp className="h-3.5 w-3.5" />
-                <span>Trending NFTs</span>
-              </div>
             </div>
             <h2 className="text-3xl font-bold tracking-tighter md:text-4xl/tight">Explore the Marketplace</h2>
             <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">

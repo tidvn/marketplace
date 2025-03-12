@@ -29,7 +29,6 @@ export function NftCard({ assetHex }: { assetHex: string }) {
         <CardContent className="p-4">
           <div className="space-y-1">
             <p className="font-medium hover:underline truncate"> {metadata.fingerprint || ""}</p>
-            {nftData.seller && <p className="text-sm text-muted-foreground truncate">{nftData.seller}</p>}
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-between p-4 pt-0">
