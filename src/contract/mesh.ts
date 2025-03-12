@@ -6,6 +6,7 @@ import {
   IFetcher,
   MeshTxBuilder,
   MeshWallet,
+  Network,
   PlutusScript,
   serializeAddressObj,
   serializePlutusScript,
@@ -17,6 +18,7 @@ export class MeshAdapter {
   protected fetcher: IFetcher;
   protected wallet: MeshWallet;
   protected meshTxBuilder: MeshTxBuilder;
+  protected network: Network;
 
   public marketplaceAddress: string;
   protected marketplaceScript: PlutusScript;
@@ -38,7 +40,7 @@ export class MeshAdapter {
       fetcher: this.fetcher,
       evaluator: blockfrostProvider,
     });
-
+    this.network = (process.env.BLOCKFROST_PROJECT_ID?.slice(0, 7) as Network) || "preview";
     this.marketplaceCompileCode = this.readValidator(blueprint, "marketplace.marketplace.spend");
 
     this.marketplaceScriptCbor = applyParamsToScript(this.marketplaceCompileCode, []);

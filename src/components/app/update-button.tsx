@@ -85,7 +85,7 @@ export const UpdateButton = ({ className, assetHex }: { className?: string; asse
               <p className="mb-4 max-w-md text-center text-sm text">Please wait a moment for the transaction to complete.</p>
               <div className="flex flex-row items-center justify-center space-x-4">
                 <Link
-                  href={`https://preview.cexplorer.io/tx/${txhash}`}
+                  href={`https://${process.env.NEXT_PUBLIC_APP_NETWORK}.cexplorer.io/tx/${txhash}`}
                   target="_blank"
                   className="mt-4 rounded-lg px-6 py-2 bg-gray-900 text-sm font-semibold text-blue-200 shadow-md"
                 >

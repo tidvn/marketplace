@@ -38,7 +38,7 @@ export class MarketplaceContract extends MeshAdapter {
       .requiredSignerHash(deserializeAddress(walletAddress).pubKeyHash)
       .selectUtxosFrom(utxos)
       .txInCollateral(collateral.input.txHash, collateral.input.outputIndex, collateral.output.amount, collateral.output.address)
-      .setNetwork("preview");
+      .setNetwork(this.network);
     return await unsignedTx.complete();
   };
 
@@ -77,7 +77,7 @@ export class MarketplaceContract extends MeshAdapter {
       .requiredSignerHash(deserializeAddress(walletAddress).pubKeyHash)
       .selectUtxosFrom(utxos)
       .txInCollateral(collateral.input.txHash, collateral.input.outputIndex, collateral.output.amount, collateral.output.address)
-      .setNetwork("preview")
+      .setNetwork(this.network)
       .complete();
     return unsignedTx;
   };
@@ -108,7 +108,7 @@ export class MarketplaceContract extends MeshAdapter {
       .requiredSignerHash(deserializeAddress(walletAddress).pubKeyHash)
       .selectUtxosFrom(utxos)
       .txInCollateral(collateral.input.txHash, collateral.input.outputIndex, collateral.output.amount, collateral.output.address)
-      .setNetwork("preview")
+      .setNetwork(this.network)
       .complete();
     return unsignedTx;
   };
@@ -144,7 +144,7 @@ export class MarketplaceContract extends MeshAdapter {
       .requiredSignerHash(deserializeAddress(walletAddress).pubKeyHash)
       .selectUtxosFrom(utxos)
       .txInCollateral(collateral.input.txHash, collateral.input.outputIndex, collateral.output.amount, collateral.output.address)
-      .setNetwork("preview")
+      .setNetwork(this.network)
       .complete();
     return unsignedTx;
   };
