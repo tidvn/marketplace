@@ -1,6 +1,5 @@
 export type NFT = {
-  policyId: string;
-  assetName: string;
+  assetHex: string;
   seller: string;
   price: number;
 };

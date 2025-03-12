@@ -6,13 +6,7 @@ import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { useState } from "react";
 
-interface NftCardProps {
-  assetHex: string;
-  seller: string;
-  price: number;
-}
-
-export function NftCard({ assetHex, seller, price }: NftCardProps) {
+export function NftCard({ assetHex }: { assetHex: string }) {
   const [imgError, setImgError] = useState(false);
   const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${assetHex}`, get);
   if (error) return <div>failed to load</div>;
@@ -35,14 +29,19 @@ export function NftCard({ assetHex, seller, price }: NftCardProps) {
         <CardContent className="p-4">
           <div className="space-y-1">
             <p className="font-medium hover:underline truncate"> {metadata.fingerprint || ""}</p>
-            <p className="text-sm text-muted-foreground truncate">{seller}</p>
+            {nftData.seller && <p className="text-sm text-muted-foreground truncate">{nftData.seller}</p>}
           </div>
         </CardContent>
         <CardFooter className="flex items-center justify-between p-4 pt-0">
-          <div>
-            <p className="text-xs text-muted-foreground"> Price</p>
-            <p className="font-medium truncate ">{price / 1_000_000} ₳</p>
-          </div>
+          {nftData.price ? (
+            <div>
+              <p className="text-xs text-muted-foreground"> Price</p>
+              <p className="font-medium truncate ">{nftData.price / 1_000_000} ₳</p>
+            </div>
+          ) : (
+            <div />
+          )}
+
           <Button size="sm">Detail</Button>
         </CardFooter>
       </Card>

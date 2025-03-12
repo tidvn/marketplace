@@ -31,10 +31,7 @@ export default function Home() {
           <div className="w-full">
             <div className="pt-6">
               <div className="grid grid-cols-1 gap-6 grid-cols-4">
-                {data &&
-                  data.result.map((nft: NFT) => (
-                    <NftCard key={nft.policyId+nft.assetName} assetHex={nft.policyId + nft.assetName} seller={nft.seller} price={nft.price} />
-                  ))}
+                {data && data.result.map((nft: NFT) => <NftCard key={nft.assetHex} assetHex={nft.assetHex} />)}
                 {/* <NftCard assetHex="Cosmic Perspective #42" seller="@stellarArtist" price="0.45 ETH" image="/placeholder.svg?height=400&width=400" />
                 <NftCard assetHex="Digital Dreams #08" seller="@pixelPioneer" price="0.32 ETH" image="/placeholder.svg?height=400&width=400" />
                 <NftCard assetHex="Abstract Realms #15" seller="@artExplorer" price="0.56 ETH" image="/placeholder.svg?height=400&width=400" />

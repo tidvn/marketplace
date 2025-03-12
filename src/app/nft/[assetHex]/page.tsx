@@ -4,11 +4,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft} from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import useSWR from "swr";
 import { get } from "@/lib/axios";
-import { hexToString } from "@meshsdk/core";
+import { hexToString, parseAssetUnit } from "@meshsdk/core";
 import { useWallet } from "@meshsdk/react";
 
 export default function NftDetailPage({ params }: { params: { assetHex: string } }) {
@@ -20,6 +20,7 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
   const metadata = nftData.metadata;
+  const { policyId, assetName } = parseAssetUnit(assetHex);
   const img = `https://ipfs.blockfrost.dev/ipfs/` + metadata.image.replace("ipfs://", "");
   return (
     <div className="container px-4 py-12 md:px-6 md:py-24">
@@ -35,43 +36,47 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
         </div>
         <div className="space-y-8">
           <div>
-            <Badge className="mb-3">{nftData.policyId}</Badge>
-            <h1 className="text-3xl font-bold text-2xl truncate">{hexToString(nftData.assetName)}</h1>
-            <div className="mt-4 flex items-center gap-2">
-              <p className="text-sm text-muted-foreground ">Seller</p>
-              <div className="flex items-center gap-2">
-                <Link href="#" className="text-sm font-medium truncate">
-                  {nftData.seller.slice(0, 50)}...
-                </Link>
-              </div>
-            </div>
-          </div>
-          <Card>
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Price</p>
-                  <p className="text-3xl font-bold">{nftData.price / 1_000_000} ₳</p>
+            <Badge className="mb-3">{policyId}</Badge>
+            <h1 className="text-3xl font-bold text-2xl truncate">{hexToString(assetName)}</h1>
+            {nftData.seller && (
+              <div className="mt-4 flex items-center gap-2">
+                <p className="text-sm text-muted-foreground ">Seller</p>
+                <div className="flex items-center gap-2">
+                  <Link href="#" className="text-sm font-medium truncate">
+                    {nftData.seller.slice(0, 25) + "..." + nftData.seller.slice(-25)}
+                  </Link>
                 </div>
               </div>
-              <div className="mt-6 flex gap-4">
-                {address === nftData.seller ? (
-                  <>
-                    <Button className="flex-1" size="lg">
-                      Update
+            )}
+          </div>
+          {nftData.seller && (
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Price</p>
+                    <p className="text-3xl font-bold">{nftData.price / 1_000_000} ₳</p>
+                  </div>
+                </div>
+                <div className="mt-6 flex gap-4">
+                  {address === nftData.seller ? (
+                    <>
+                      <Button className="flex-1" size="lg">
+                        Update
+                      </Button>
+                      <Button variant="outline" className="flex-1" size="lg">
+                        Delist
+                      </Button>
+                    </>
+                  ) : (
+                    <Button className="flex-1" size="lg" disabled={!address}>
+                      Buy
                     </Button>
-                    <Button variant="outline" className="flex-1" size="lg">
-                      Delist
-                    </Button>
-                  </>
-                ) : (
-                  <Button className="flex-1" size="lg" disabled={!address}>
-                    Buy
-                  </Button>
-                )}
-              </div>
-            </CardContent>
-          </Card>
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           <div className="pt-4">
             <div className="space-y-4">
