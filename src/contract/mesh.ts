@@ -19,6 +19,7 @@ export class MeshAdapter {
   protected wallet: MeshWallet;
   protected meshTxBuilder: MeshTxBuilder;
   protected network: Network;
+  protected networkId: number;
 
   public marketplaceAddress: string;
   protected marketplaceScript: PlutusScript;
@@ -41,6 +42,7 @@ export class MeshAdapter {
       evaluator: blockfrostProvider,
     });
     this.network = (process.env.BLOCKFROST_PROJECT_ID?.slice(0, 7) as Network) || "preview";
+    this.networkId = this.network == "mainnet" ? 1 : 0;
     this.marketplaceCompileCode = this.readValidator(blueprint, "marketplace.marketplace.spend");
 
     this.marketplaceScriptCbor = applyParamsToScript(this.marketplaceCompileCode, []);
@@ -60,7 +62,7 @@ export class MeshAdapter {
   }> => {
     const utxos = await this.wallet.getUtxos();
     const collaterals = await this.wallet.getCollateral();
-    const walletAddress = await this.wallet.getChangeAddress();
+    const walletAddress = this.wallet.getChangeAddress();
     if (!utxos || utxos.length === 0) throw new Error("No UTXOs found in getWalletForTx method.");
 
     if (!collaterals || collaterals.length === 0) throw new Error("No collateral found in getWalletForTx method.");
@@ -95,7 +97,7 @@ export class MeshAdapter {
   public readPlutusData = (plutusData: string) => {
     try {
       const inputDatum = deserializeDatum(plutusData);
-      const seller = serializeAddressObj(deserializeDatum(plutusData).fields[0], 0);
+      const seller = serializeAddressObj(deserializeDatum(plutusData).fields[0], this.networkId);
       return {
         seller: seller,
         price: inputDatum.fields[1].int,
