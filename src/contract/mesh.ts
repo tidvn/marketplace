@@ -79,7 +79,7 @@ export class MeshAdapter {
   };
 
   protected readValidator = function (plutus: any, title: string): string {
-    const validator = plutus.validators.find(function (validator:any) {
+    const validator = plutus.validators.find(function (validator: any) {
       return validator.title === title;
     });
 

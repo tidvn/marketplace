@@ -64,7 +64,7 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
                   <AvatarFallback>SA</AvatarFallback>
                 </Avatar>
                 <Link href="#" className="text-sm font-medium hover:underline">
-                 {data.seller}
+                  {data.seller}
                 </Link>
               </div>
             </div>

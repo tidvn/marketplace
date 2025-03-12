@@ -12,12 +12,7 @@ interface ButtonProps {
   extensions?: number[];
 }
 
-export const CardanoWallet = ({
-  label = "Connect Wallet",
-  onConnected = undefined,
-  isDark = false,
-  extensions = [],
-}: ButtonProps) => {
+export const CardanoWallet = ({ label = "Connect Wallet", onConnected = undefined, isDark = false, extensions = [] }: ButtonProps) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [hideMenuList, setHideMenuList] = useState(true);
 
@@ -33,7 +28,6 @@ export const CardanoWallet = ({
   useEffect(() => {
     setIsDarkMode(isDark);
   }, [isDark]);
-
 
   return (
     <div onMouseEnter={() => setHideMenuList(false)} onMouseLeave={() => setHideMenuList(true)} style={{ width: "min-content", zIndex: 50 }}>
@@ -58,7 +52,6 @@ export const CardanoWallet = ({
                 active={name === wallet.id}
               />
             ))}
-
           </>
         ) : wallets.length === 0 ? (
           <span>No Wallet Found</span>
