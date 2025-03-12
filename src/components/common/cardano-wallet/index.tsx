@@ -4,20 +4,33 @@ import { useWallet, useWalletList } from "@meshsdk/react";
 import ButtonDropdown from "./button-dropdown";
 import { WalletBalance } from "./wallet-balance";
 import { MenuItem } from "./menu-item";
+import { useRouter } from "next/navigation";
 
 interface ButtonProps {
   label?: string;
   onConnected?: () => void;
+  persist?: boolean;
   isDark?: boolean;
   extensions?: number[];
 }
 
-export const CardanoWallet = ({ label = "Connect Wallet", onConnected = undefined, isDark = false, extensions = [] }: ButtonProps) => {
+export const CardanoWallet = ({
+  label = "Connect Wallet",
+  onConnected = undefined,
+  persist = false,
+  isDark = false,
+  extensions = [],
+}: ButtonProps) => {
+  const router = useRouter();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [hideMenuList, setHideMenuList] = useState(true);
 
-  const { connect, connecting, connected, disconnect, name } = useWallet();
+  const { connect, connecting, connected, disconnect, name, setPersist } = useWallet();
   const wallets = useWalletList();
+  
+  useEffect(() => {
+    setPersist(persist);
+  }, [persist, setPersist]);
 
   useEffect(() => {
     if (connected && onConnected) {
@@ -46,7 +59,7 @@ export const CardanoWallet = ({ label = "Connect Wallet", onConnected = undefine
                 icon={wallet.icon}
                 label={wallet.name}
                 action={() => {
-                  connect(wallet.id, extensions);
+                  connect(wallet.id, extensions, persist);
                   setHideMenuList(!hideMenuList);
                 }}
                 active={name === wallet.id}
@@ -57,6 +70,7 @@ export const CardanoWallet = ({ label = "Connect Wallet", onConnected = undefine
           <span>No Wallet Found</span>
         ) : (
           <>
+            <MenuItem active={false} label="Go Profile" action={() => router.push("/profile")} icon={undefined} />
             <MenuItem active={false} label="disconnect" action={disconnect} icon={undefined} />
           </>
         )}

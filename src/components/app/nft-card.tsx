@@ -14,19 +14,18 @@ interface NftCardProps {
 
 export function NftCard({ assetHex, seller, price }: NftCardProps) {
   const [imgError, setImgError] = useState(false);
-  const { data, error, isLoading } = useSWR(`/specific-asset?unit=${assetHex}`, get);
+  const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${assetHex}`, get);
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
-  const { onchain_metadata, fingerprint } = data;
-  if (!onchain_metadata) return null;
-  const img = `https://ipfs.blockfrost.dev/ipfs/` + onchain_metadata.image.replace("ipfs://", "");
+  const metadata = nftData.metadata;
+  const img = `https://ipfs.blockfrost.dev/ipfs/` + metadata.image.replace("ipfs://", "");
   return (
     <Link href={`/nft/${assetHex}`}>
       <Card className="overflow-hidden">
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={imgError ? "/placeholder.png" : img}
-            alt={fingerprint}
+            alt={metadata.fingerprint || ""}
             fill
             onError={() => setImgError(true)}
             className="object-cover transition-transform hover:scale-105"
@@ -35,7 +34,7 @@ export function NftCard({ assetHex, seller, price }: NftCardProps) {
 
         <CardContent className="p-4">
           <div className="space-y-1">
-            <p className="font-medium hover:underline truncate"> {fingerprint}</p>
+            <p className="font-medium hover:underline truncate"> {metadata.fingerprint || ""}</p>
             <p className="text-sm text-muted-foreground truncate">{seller}</p>
           </div>
         </CardContent>

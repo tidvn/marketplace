@@ -2,7 +2,7 @@ import { MeshAdapter } from "@/contract/mesh";
 import { blockfrostProvider } from "@/lib/blockfrost";
 import { NFTExtended } from "@/types";
 
-export async function GET(request: Request) {
+export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const unit = searchParams.get("unit") as string;

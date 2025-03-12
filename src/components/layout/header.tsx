@@ -9,7 +9,7 @@ function Header() {
       <Link href="/" className="text-lg font-semibold">
         Cardano Marketplace
       </Link>
-      <CardanoWallet />
+      <CardanoWallet persist={true} />
     </header>
   );
 }

@@ -4,3 +4,6 @@ export type NFT = {
   seller: string;
   price: number;
 };
+export type NFTExtended = NFT & {
+  metadata: Record<string, string>;
+};
