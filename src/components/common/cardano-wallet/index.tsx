@@ -27,7 +27,7 @@ export const CardanoWallet = ({
 
   const { connect, connecting, connected, disconnect, name, setPersist } = useWallet();
   const wallets = useWalletList();
-  
+
   useEffect(() => {
     setPersist(persist);
   }, [persist, setPersist]);

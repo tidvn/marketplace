@@ -97,7 +97,7 @@ export class MeshAdapter {
       return {
         seller: seller,
         price: inputDatum.fields[1].int,
-        assetHex:  inputDatum.fields[2].bytes + inputDatum.fields[3].bytes,
+        assetHex: inputDatum.fields[2].bytes + inputDatum.fields[3].bytes,
       };
     } catch (e) {
       console.error("Error reading plutus data: ", e);

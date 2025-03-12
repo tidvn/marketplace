@@ -73,7 +73,6 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
               </CardContent>
             </Card>
           )}
-          
 
           <div className="pt-4">
             <div className="space-y-4">
