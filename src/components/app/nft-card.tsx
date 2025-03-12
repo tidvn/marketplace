@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { useState } from "react";
+import { SellButton } from "./sell-button";
 
 export function NftCard({ assetHex }: { assetHex: string }) {
   const [imgError, setImgError] = useState(false);
@@ -14,8 +14,8 @@ export function NftCard({ assetHex }: { assetHex: string }) {
   const metadata = nftData.metadata;
   const img = `https://ipfs.blockfrost.dev/ipfs/` + metadata.image.replace("ipfs://", "");
   return (
-    <Link href={`/nft/${assetHex}`}>
-      <Card className="overflow-hidden">
+    <Card className="overflow-hidden">
+      <Link href={`/nft/${assetHex}`}>
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={imgError ? "/placeholder.png" : img}
@@ -31,19 +31,19 @@ export function NftCard({ assetHex }: { assetHex: string }) {
             <p className="font-medium hover:underline truncate"> {metadata.fingerprint || ""}</p>
           </div>
         </CardContent>
-        <CardFooter className="flex items-center justify-between p-4 pt-0">
-          {nftData.price ? (
+      </Link>
+      <CardFooter className="flex items-center justify-between p-4 pt-0">
+        {nftData.price ? (
+          <>
             <div>
               <p className="text-xs text-muted-foreground"> Price</p>
               <p className="font-medium truncate ">{nftData.price / 1_000_000} ₳</p>
             </div>
-          ) : (
-            <div />
-          )}
-
-          <Button size="sm">Detail</Button>
-        </CardFooter>
-      </Card>
-    </Link>
+          </>
+        ) : (
+          <SellButton className="w-full" />
+        )}
+      </CardFooter>
+    </Card>
   );
 }

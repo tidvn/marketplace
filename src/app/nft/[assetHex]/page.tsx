@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
@@ -10,6 +9,9 @@ import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { hexToString, parseAssetUnit } from "@meshsdk/core";
 import { useWallet } from "@meshsdk/react";
+import { BuyButton } from "@/components/app/buy-button";
+import { UpdateButton } from "@/components/app/update-button";
+import { WithdrawButton } from "@/components/app/withdraw-button";
 
 export default function NftDetailPage({ params }: { params: { assetHex: string } }) {
   const { address } = useWallet();
@@ -58,25 +60,20 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
                     <p className="text-3xl font-bold">{nftData.price / 1_000_000} ₳</p>
                   </div>
                 </div>
-                <div className="mt-6 flex gap-4">
+                <div className="mt-6 flex justify-between gap-4">
                   {address === nftData.seller ? (
                     <>
-                      <Button className="flex-1" size="lg">
-                        Update
-                      </Button>
-                      <Button variant="outline" className="flex-1" size="lg">
-                        Delist
-                      </Button>
+                      <UpdateButton className="w-1/2 bg-blue-500" />
+                      <WithdrawButton className="w-1/2 bg-red-500" />
                     </>
                   ) : (
-                    <Button className="flex-1" size="lg" disabled={!address}>
-                      Buy
-                    </Button>
+                    <BuyButton className="w-1/2 bg" />
                   )}
                 </div>
               </CardContent>
             </Card>
           )}
+          
 
           <div className="pt-4">
             <div className="space-y-4">
