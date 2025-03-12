@@ -39,7 +39,7 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
         <div className="space-y-8">
           <div>
             <Badge className="mb-3">{policyId}</Badge>
-            <h1 className="text-3xl font-bold text-2xl truncate">{hexToString(assetName)}</h1>
+            <h1 className="text-3xl font-bold truncate">{hexToString(assetName)}</h1>
             {nftData.seller && (
               <div className="mt-4 flex items-center gap-2">
                 <p className="text-sm text-muted-foreground ">Seller</p>
@@ -63,11 +63,11 @@ export default function NftDetailPage({ params }: { params: { assetHex: string }
                 <div className="mt-6 flex justify-between gap-4">
                   {address === nftData.seller ? (
                     <>
-                      <UpdateButton className="w-1/2 bg-blue-500" />
-                      <WithdrawButton className="w-1/2 bg-red-500" />
+                      <UpdateButton className="w-1/2 bg-blue-500" assetHex={assetHex} />
+                      <WithdrawButton className="w-1/2 bg-red-500" assetHex={assetHex} />
                     </>
                   ) : (
-                    <BuyButton className="w-1/2 bg" />
+                    <BuyButton className="w-1/2 bg" assetHex={assetHex} />
                   )}
                 </div>
               </CardContent>

@@ -1,5 +1,6 @@
 import { MeshAdapter } from "@/contract/mesh";
 import { blockfrostProvider } from "@/lib/blockfrost";
+import { NFT } from "@/types";
 
 export async function GET(request: Request) {
   try {
@@ -7,10 +8,12 @@ export async function GET(request: Request) {
     const unit = searchParams.get("unit") as string;
     const mesh = new MeshAdapter({});
     const metadata = await blockfrostProvider.fetchAssetMetadata(unit);
-    let datum = {};
+    let datum: NFT = null!;
     const [utxo] = await blockfrostProvider.fetchAddressUTxOs(mesh.marketplaceAddress, unit);
     if (utxo) {
+      const inputLovelace = Number(utxo.output.amount.find((a) => a.unit === "lovelace")!.quantity);
       datum = mesh.readPlutusData(utxo.output.plutusData as string);
+      datum.price = datum.price + inputLovelace;
     }
     const nft = {
       ...datum,

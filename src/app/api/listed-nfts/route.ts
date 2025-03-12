@@ -9,6 +9,10 @@ export async function GET() {
     const result: NFT[] = utxos
       .map((utxo) => {
         const datum = mesh.readPlutusData(utxo.output.plutusData as string);
+        if (datum) {
+          const inputLovelace = Number(utxo.output.amount.find((a) => a.unit === "lovelace")!.quantity);
+          datum.price = datum.price + inputLovelace;
+        }
         return datum;
       })
       .filter((datum) => datum != null);

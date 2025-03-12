@@ -41,7 +41,7 @@ export function NftCard({ assetHex }: { assetHex: string }) {
             </div>
           </>
         ) : (
-          <SellButton className="w-full" />
+          <SellButton className="w-full" assetHex={assetHex} />
         )}
       </CardFooter>
     </Card>

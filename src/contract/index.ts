@@ -130,7 +130,7 @@ export class MarketplaceContract extends MeshAdapter {
       .txInRedeemerValue(mConStr1([]))
       .txInScript(this.marketplaceScriptCbor)
 
-      .txOut(walletAddress, [
+      .txOut(this.marketplaceAddress, [
         {
           unit: unit,
           quantity: "1",
