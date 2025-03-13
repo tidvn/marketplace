@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
+import { useWallet } from "@/hooks/use-wallet";
 import { Wallet } from "@meshsdk/common";
-import { useLovelace } from "@meshsdk/react";
 import { ChevronDown } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export const WalletBalance = ({
   connected,
@@ -15,7 +16,16 @@ export const WalletBalance = ({
   label: string;
   wallet: Wallet | undefined;
 }) => {
-  const lovelace = useLovelace();
+  const { browserWallet } = useWallet();
+  const [lovelace, setLovelace] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (browserWallet) {
+      browserWallet.getLovelace().then((balance) => {
+        setLovelace(balance);
+      });
+    }
+  }, [browserWallet]);
 
   return connected && lovelace && wallet?.icon ? (
     <>

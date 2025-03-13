@@ -2,7 +2,6 @@
 import { Lexend } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/header";
-import { MeshProvider } from "@meshsdk/react";
 import { SWRConfig } from "swr";
 import "@/styles/globals.css";
 
@@ -19,14 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(fontSans.className, `antialiased`)}>
-        <MeshProvider>
-          <SWRConfig>
-            <div className="container mx-auto ">
-              <Header />
-              <main className="flex-1">{children}</main>
-            </div>
-          </SWRConfig>
-        </MeshProvider>
+        <SWRConfig>
+          <div className="container mx-auto ">
+            <Header />
+            <main className="flex-1">{children}</main>
+          </div>
+        </SWRConfig>
       </body>
     </html>
   );

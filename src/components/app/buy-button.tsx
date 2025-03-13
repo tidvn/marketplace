@@ -3,12 +3,12 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { useState } from "react";
-import { useWallet } from "@meshsdk/react";
+import { useWallet } from "@/hooks/use-wallet";
 import { post } from "@/lib/axios";
 import Link from "next/link";
 
 export const BuyButton = ({ className, assetHex }: { className?: string; assetHex: string }) => {
-  const { address, wallet } = useWallet();
+  const { address, browserWallet: wallet } = useWallet();
   // const [dialogOpen, setDialogOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [txhash, setTxhash] = useState("");

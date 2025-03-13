@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { NftCard } from "@/components/app/nft-card";
-import { useWallet } from "@meshsdk/react";
+import { useWallet } from "@/hooks/use-wallet";
 import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { NFT } from "@/types";

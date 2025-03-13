@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
-import { useWallet, useWalletList } from "@meshsdk/react";
+import { useWallet } from "@/hooks/use-wallet";
 import ButtonDropdown from "./button-dropdown";
 import { WalletBalance } from "./wallet-balance";
 import { MenuItem } from "./menu-item";
 import { useRouter } from "next/navigation";
+import { BrowserWallet, Wallet } from "@meshsdk/core";
 
 interface ButtonProps {
   label?: string;
@@ -14,29 +15,19 @@ interface ButtonProps {
   extensions?: number[];
 }
 
-export const CardanoWallet = ({
-  label = "Connect Wallet",
-  onConnected = undefined,
-  persist = false,
-  isDark = false,
-  extensions = [],
-}: ButtonProps) => {
+export const CardanoWallet = ({ label = "Connect Wallet", isDark = false }: ButtonProps) => {
   const router = useRouter();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [hideMenuList, setHideMenuList] = useState(true);
-
-  const { connect, connecting, connected, disconnect, name, setPersist } = useWallet();
-  const wallets = useWalletList();
-
-  useEffect(() => {
-    setPersist(persist);
-  }, [persist, setPersist]);
+  const [wallets, setWallets] = useState<Wallet[]>([]);
+  const { walletName, connect, disconnect } = useWallet();
 
   useEffect(() => {
-    if (connected && onConnected) {
-      onConnected();
+    async function get() {
+      setWallets(await BrowserWallet.getAvailableWallets());
     }
-  }, [connected, onConnected]);
+    get();
+  }, []);
 
   useEffect(() => {
     setIsDarkMode(isDark);
@@ -45,13 +36,13 @@ export const CardanoWallet = ({
   return (
     <div onMouseEnter={() => setHideMenuList(false)} onMouseLeave={() => setHideMenuList(true)} style={{ width: "min-content", zIndex: 50 }}>
       <ButtonDropdown isDarkMode={isDarkMode} hideMenuList={hideMenuList} setHideMenuList={setHideMenuList}>
-        <WalletBalance connected={connected} connecting={connecting} label={label} wallet={wallets.find((wallet) => wallet.id === name)} />
+        <WalletBalance connected={walletName != null} connecting={false} label={label} wallet={wallets.find((wallet) => wallet.id === walletName)} />
       </ButtonDropdown>
       <div
         className={`mr-menu-list absolute w-60 rounded-b-md border text-center shadow-sm backdrop-blur ${hideMenuList && "hidden"} ${isDarkMode ? `bg-neutral-950	text-neutral-50` : `bg-neutral-50	text-neutral-950`}`}
         style={{ zIndex: 50 }}
       >
-        {!connected && wallets.length > 0 ? (
+        {walletName == null && wallets.length > 0 ? (
           <>
             {wallets.map((wallet, index) => (
               <MenuItem
@@ -59,10 +50,10 @@ export const CardanoWallet = ({
                 icon={wallet.icon}
                 label={wallet.name}
                 action={() => {
-                  connect(wallet.id, extensions, persist);
+                  connect(wallet.id);
                   setHideMenuList(!hideMenuList);
                 }}
-                active={name === wallet.id}
+                active={walletName === wallet.id}
               />
             ))}
           </>

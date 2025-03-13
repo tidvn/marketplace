@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["@meshsdk/core", "@meshsdk/core-cst", "@meshsdk/react"],
+  serverExternalPackages: ["@meshsdk/core", "@meshsdk/core-cst"],
   reactStrictMode: true,
   images: {
     remotePatterns: [

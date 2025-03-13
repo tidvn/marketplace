@@ -8,7 +8,7 @@ import { useState, use } from "react";
 import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { hexToString, parseAssetUnit } from "@meshsdk/core";
-import { useWallet } from "@meshsdk/react";
+import { useWallet } from "@/hooks/use-wallet";
 import { BuyButton } from "@/components/app/buy-button";
 import { UpdateButton } from "@/components/app/update-button";
 import { WithdrawButton } from "@/components/app/withdraw-button";
