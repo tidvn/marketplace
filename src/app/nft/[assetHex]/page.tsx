@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useState, use } from "react";
 import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { hexToString, parseAssetUnit } from "@meshsdk/core";
@@ -13,9 +13,10 @@ import { BuyButton } from "@/components/app/buy-button";
 import { UpdateButton } from "@/components/app/update-button";
 import { WithdrawButton } from "@/components/app/withdraw-button";
 
-export default function NftDetailPage({ params }: { params: { assetHex: string } }) {
+export default function NftDetailPage({ params }: { params: Promise<{ assetHex: string }> }) {
+  const { assetHex } = use(params);
+
   const { address } = useWallet();
-  const assetHex = params.assetHex;
   const [imgError, setImgError] = useState(false);
 
   const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${assetHex}`, get);
