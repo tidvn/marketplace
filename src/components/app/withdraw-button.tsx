@@ -8,7 +8,7 @@ import { post } from "@/lib/axios";
 import Link from "next/link";
 
 export const WithdrawButton = ({ className, assetHex }: { className?: string; assetHex: string }) => {
-  const { address, browserWallet:wallet } = useWallet();
+  const { address, browserWallet: wallet } = useWallet();
   const [loading, setLoading] = useState(false);
   const [txhash, setTxhash] = useState("");
   const [error, setError] = useState("");
