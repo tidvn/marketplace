@@ -70,6 +70,12 @@ export default function MintPage() {
       const txBuilder = new MeshTxBuilder();
       const unsignedTx = await txBuilder
         .mint("1", policyId, tokenNameHex)
+        .txOut(changeAddress, [
+          {
+            unit: policyId + tokenNameHex,
+            quantity: "1",
+          },
+        ])
         .mintingScript(forgingScript)
         .metadataValue(721, metadata)
         .changeAddress(changeAddress)
