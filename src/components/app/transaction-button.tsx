@@ -7,8 +7,8 @@ import { useState } from "react";
 import { useWallet } from "@/hooks/use-wallet";
 import { post } from "@/lib/axios";
 import Link from "next/link";
+import { TransactionAction } from "@/types";
 
-type TransactionAction = "sell" | "buy" | "update" | "withdraw";
 
 interface TransactionButtonProps {
   action: TransactionAction;

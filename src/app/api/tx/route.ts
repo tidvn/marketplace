@@ -1,8 +1,8 @@
 import { MarketplaceContract } from "@/contract";
 import { blockfrostProvider } from "@/lib/blockfrost";
+import { TransactionAction } from "@/types";
 import { MeshWallet } from "@meshsdk/core";
 
-type TransactionAction = "sell" | "buy" | "update" | "withdraw";
 
 interface TransactionRequest {
   action: TransactionAction;
