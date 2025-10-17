@@ -6,16 +6,16 @@ import { get } from "@/lib/axios";
 import { useState } from "react";
 import { TransactionButton } from "./transaction-button";
 
-export function NftCard({ assetHex }: { assetHex: string }) {
+export function NftCard({ unit }: { unit: string }) {
   const [imgError, setImgError] = useState(false);
-  const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${assetHex}`, get);
+  const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${unit}`, get);
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
   const metadata = nftData.metadata;
   const img = `https://ipfs.blockfrost.dev/ipfs/` + metadata.image.replace("ipfs://", "");
   return (
     <Card className="overflow-hidden">
-      <Link href={`/nft/${assetHex}`}>
+      <Link href={`/nft/${unit}`}>
         <div className="relative aspect-square overflow-hidden">
           <Image
             src={imgError ? "/placeholder.png" : img}
@@ -41,7 +41,7 @@ export function NftCard({ assetHex }: { assetHex: string }) {
             </div>
           </>
         ) : (
-          <TransactionButton action="sell" className="w-full" assetHex={assetHex} />
+          <TransactionButton action="sell" className="w-full" unit={unit} />
         )}
       </CardFooter>
     </Card>

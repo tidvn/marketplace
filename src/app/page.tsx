@@ -25,15 +25,15 @@ export default function Home() {
           <div className="w-full">
             <div className="pt-6">
               <div className="grid grid-cols-1 gap-6 grid-cols-4">
-                {data && data.result.map((nft: NFT) => <NftCard key={nft.assetHex} assetHex={nft.assetHex} />)}
-                {/* <NftCard assetHex="Cosmic Perspective #42" seller="@stellarArtist" price="0.45 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Digital Dreams #08" seller="@pixelPioneer" price="0.32 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Abstract Realms #15" seller="@artExplorer" price="0.56 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Neon Genesis #03" seller="@futureVision" price="0.28 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Quantum Fragments #21" seller="@digitalSculptor" price="0.75 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Ethereal Echoes #11" seller="@dreamWeaver" price="0.39 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Cybernetic Sunset #27" seller="@neoseller" price="0.51 ETH" image="/placeholder.svg?height=400&width=400" />
-                <NftCard assetHex="Virtual Vistas #14" seller="@metaArtisan" price="0.44 ETH" image="/placeholder.svg?height=400&width=400" /> */}
+                {data && data.result.map((nft: NFT) => <NftCard key={nft.unit} unit={nft.unit} />)}
+                {/* <NftCard unit="Cosmic Perspective #42" seller="@stellarArtist" price="0.45 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Digital Dreams #08" seller="@pixelPioneer" price="0.32 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Abstract Realms #15" seller="@artExplorer" price="0.56 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Neon Genesis #03" seller="@futureVision" price="0.28 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Quantum Fragments #21" seller="@digitalSculptor" price="0.75 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Ethereal Echoes #11" seller="@dreamWeaver" price="0.39 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Cybernetic Sunset #27" seller="@neoseller" price="0.51 ETH" image="/placeholder.svg?height=400&width=400" />
+                <NftCard unit="Virtual Vistas #14" seller="@metaArtisan" price="0.44 ETH" image="/placeholder.svg?height=400&width=400" /> */}
               </div>
             </div>
           </div>

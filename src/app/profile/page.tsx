@@ -45,14 +45,14 @@ export default function ProfilePage() {
             <TabsContent value="ownNFTs" className="pt-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {ownAssets.map((asset: NFT) => (
-                  <NftCard key={asset.assetHex} assetHex={asset.assetHex} />
+                  <NftCard key={asset.unit} unit={asset.unit} />
                 ))}
               </div>
             </TabsContent>
             <TabsContent value="listingNfts" className="pt-6">
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {listingAssets.map((asset: NFT) => (
-                  <NftCard key={asset.assetHex} assetHex={asset.assetHex} />
+                  <NftCard key={asset.unit} unit={asset.unit} />
                 ))}
               </div>
             </TabsContent>

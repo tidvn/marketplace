@@ -116,7 +116,7 @@ src/components/
 ### Type Definitions
 
 Core types in `src/types/index.d.ts`:
-- `NFT`: Base type with assetHex, seller, price
+- `NFT`: Base type with unit, seller, price
 - `NFTExtended`: NFT with additional metadata fields
 
 ## Key Technical Notes
@@ -127,11 +127,11 @@ Core types in `src/types/index.d.ts`:
 
 - **Path Aliases**: Use `@/*` to import from `src/` directory (configured in `tsconfig.json`).
 
-- **Plutus Data Handling**: The `readPlutusData()` method in MeshAdapter deserializes inline datums to extract seller, price, and assetHex. The datum structure matches the Plutus script's expected format.
+- **Plutus Data Handling**: The `readPlutusData()` method in MeshAdapter deserializes inline datums to extract seller, price, and unit. The datum structure matches the Plutus script's expected format.
 
 - **Collateral Requirements**: All Plutus V3 transactions require collateral UTXOs. The `getWalletForTx()` method ensures collateral is available before building transactions.
 
-- **Asset Identification**: NFTs are tracked by assetHex (concatenated policyId + assetName in hex). This is used across all API routes and contract methods.
+- **Asset Identification**: NFTs are tracked by unit (concatenated policyId + assetName in hex). This is used across all API routes and contract methods.
 
 ## Common Patterns
 

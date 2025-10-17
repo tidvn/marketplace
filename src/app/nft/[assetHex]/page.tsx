@@ -11,17 +11,17 @@ import { hexToString, parseAssetUnit } from "@meshsdk/core";
 import { useWallet } from "@/hooks/use-wallet";
 import { TransactionButton } from "@/components/app/transaction-button";
 
-export default function NftDetailPage({ params }: { params: Promise<{ assetHex: string }> }) {
-  const { assetHex } = use(params);
+export default function NftDetailPage({ params }: { params: Promise<{ unit: string }> }) {
+  const { unit } = use(params);
 
   const { address } = useWallet();
   const [imgError, setImgError] = useState(false);
 
-  const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${assetHex}`, get);
+  const { data: nftData, error, isLoading } = useSWR(`/specific-asset?unit=${unit}`, get);
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
   const metadata = nftData.metadata;
-  const { policyId, assetName } = parseAssetUnit(assetHex);
+  const { policyId, assetName } = parseAssetUnit(unit);
   const img = `https://ipfs.blockfrost.dev/ipfs/` + metadata.image.replace("ipfs://", "");
   return (
     <div className="container px-4 py-12 md:px-6 md:py-24">
@@ -62,11 +62,11 @@ export default function NftDetailPage({ params }: { params: Promise<{ assetHex: 
                 <div className="mt-6 flex justify-between gap-4">
                   {address === nftData.seller ? (
                     <>
-                      <TransactionButton action="update" className="w-1/2 bg-blue-500" assetHex={assetHex} />
-                      <TransactionButton action="withdraw" className="w-1/2 bg-red-500" assetHex={assetHex} />
+                      <TransactionButton action="update" className="w-1/2 bg-blue-500" unit={unit} />
+                      <TransactionButton action="withdraw" className="w-1/2 bg-red-500" unit={unit} />
                     </>
                   ) : (
-                    <TransactionButton action="buy" className="w-1/2 bg" assetHex={assetHex} />
+                    <TransactionButton action="buy" className="w-1/2 bg" unit={unit} />
                   )}
                 </div>
               </CardContent>

@@ -108,7 +108,7 @@ src/components/
 ### Type Definitions
 
 Core types in `src/types/index.d.ts`:
-- `NFT`: Base type with assetHex, seller, price
+- `NFT`: Base type with unit, seller, price
 - `NFTExtended`: NFT with additional metadata fields
 
 ## Key Technical Notes
@@ -116,9 +116,9 @@ Core types in `src/types/index.d.ts`:
 - **Network Configuration**: Blockfrost project ID prefix determines network. Ensure `NEXT_PUBLIC_APP_NETWORK` matches.
 - **Webpack**: `next.config.ts` enables `asyncWebAssembly` and externalizes Mesh SDK packages for WebAssembly support.
 - **Path Aliases**: Use `@/*` to import from `src/` directory.
-- **Plutus Data**: `readPlutusData()` deserializes inline datums to extract seller, price, assetHex.
+- **Plutus Data**: `readPlutusData()` deserializes inline datums to extract seller, price, unit.
 - **Collateral**: All Plutus V3 transactions require collateral UTXOs. `getWalletForTx()` ensures collateral availability.
-- **Asset Identification**: NFTs tracked by assetHex (concatenated policyId + assetName in hex).
+- **Asset Identification**: NFTs tracked by unit (concatenated policyId + assetName in hex).
 
 ## Common Patterns
 

@@ -11,7 +11,7 @@ export async function GET(request: Request) {
       .filter((item) => item !== "lovelace")
       .map((item) => {
         return {
-          assetHex: item,
+          unit: item,
         };
       });
     const listingAssets = await blockfrostProvider.fetchAddressUTxOs(mesh.marketplaceAddress);

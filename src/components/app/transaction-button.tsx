@@ -12,7 +12,7 @@ type TransactionAction = "sell" | "buy" | "update" | "withdraw";
 
 interface TransactionButtonProps {
   action: TransactionAction;
-  assetHex: string;
+  unit: string;
   className?: string;
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
 }
@@ -44,7 +44,7 @@ const actionConfig = {
   },
 };
 
-export const TransactionButton = ({ action, assetHex, className, variant }: TransactionButtonProps) => {
+export const TransactionButton = ({ action, unit, className, variant }: TransactionButtonProps) => {
   const { address, browserWallet: wallet } = useWallet();
   const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false);
@@ -59,7 +59,7 @@ export const TransactionButton = ({ action, assetHex, className, variant }: Tran
       setLoading(true);
       setError("");
 
-      if (!assetHex) {
+      if (!unit) {
         throw new Error("Asset not found");
       }
 
@@ -78,7 +78,7 @@ export const TransactionButton = ({ action, assetHex, className, variant }: Tran
       const response = await post("/tx", {
         action,
         address,
-        assetHex,
+        unit,
         ...(priceInLovelace && { price: priceInLovelace }),
       });
 

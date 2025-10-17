@@ -1,5 +1,5 @@
 export type NFT = {
-  assetHex: string;
+  unit: string;
   seller: string;
   price: number;
 };

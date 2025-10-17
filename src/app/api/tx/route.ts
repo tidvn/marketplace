@@ -7,19 +7,19 @@ type TransactionAction = "sell" | "buy" | "update" | "withdraw";
 interface TransactionRequest {
   action: TransactionAction;
   address: string;
-  assetHex: string;
+  unit: string;
   price?: number;
 }
 
 export async function POST(request: Request) {
   try {
-    const { action, address, assetHex, price } = (await request.json()) as TransactionRequest;
+    const { action, address, unit, price } = (await request.json()) as TransactionRequest;
 
     // Validate common fields
     if (!address) {
       throw new Error("Wallet not connected");
     }
-    if (!assetHex) {
+    if (!unit) {
       throw new Error("Asset not found");
     }
     if (!action || !["sell", "buy", "update", "withdraw"].includes(action)) {
@@ -54,24 +54,24 @@ export async function POST(request: Request) {
     switch (action) {
       case "sell":
         unsignedTx = await contract.sell({
-          unit: assetHex,
+          unit: unit,
           price: price!,
         });
         break;
       case "buy":
         unsignedTx = await contract.buy({
-          unit: assetHex,
+          unit: unit,
         });
         break;
       case "update":
         unsignedTx = await contract.update({
-          unit: assetHex,
+          unit: unit,
           newPrice: price!,
         });
         break;
       case "withdraw":
         unsignedTx = await contract.withdraw({
-          unit: assetHex,
+          unit: unit,
         });
         break;
       default:
