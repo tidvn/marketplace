@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { useState } from "react";
-import { SellButton } from "./sell-button";
+import { TransactionButton } from "./transaction-button";
 
 export function NftCard({ assetHex }: { assetHex: string }) {
   const [imgError, setImgError] = useState(false);
@@ -41,7 +41,7 @@ export function NftCard({ assetHex }: { assetHex: string }) {
             </div>
           </>
         ) : (
-          <SellButton className="w-full" assetHex={assetHex} />
+          <TransactionButton action="sell" className="w-full" assetHex={assetHex} />
         )}
       </CardFooter>
     </Card>

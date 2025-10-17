@@ -9,9 +9,7 @@ import useSWR from "swr";
 import { get } from "@/lib/axios";
 import { hexToString, parseAssetUnit } from "@meshsdk/core";
 import { useWallet } from "@/hooks/use-wallet";
-import { BuyButton } from "@/components/app/buy-button";
-import { UpdateButton } from "@/components/app/update-button";
-import { WithdrawButton } from "@/components/app/withdraw-button";
+import { TransactionButton } from "@/components/app/transaction-button";
 
 export default function NftDetailPage({ params }: { params: Promise<{ assetHex: string }> }) {
   const { assetHex } = use(params);
@@ -64,11 +62,11 @@ export default function NftDetailPage({ params }: { params: Promise<{ assetHex: 
                 <div className="mt-6 flex justify-between gap-4">
                   {address === nftData.seller ? (
                     <>
-                      <UpdateButton className="w-1/2 bg-blue-500" assetHex={assetHex} />
-                      <WithdrawButton className="w-1/2 bg-red-500" assetHex={assetHex} />
+                      <TransactionButton action="update" className="w-1/2 bg-blue-500" assetHex={assetHex} />
+                      <TransactionButton action="withdraw" className="w-1/2 bg-red-500" assetHex={assetHex} />
                     </>
                   ) : (
-                    <BuyButton className="w-1/2 bg" assetHex={assetHex} />
+                    <TransactionButton action="buy" className="w-1/2 bg" assetHex={assetHex} />
                   )}
                 </div>
               </CardContent>
