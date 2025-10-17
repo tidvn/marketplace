@@ -22,6 +22,7 @@ npm run format       # Format with Prettier
 ## Environment Configuration
 
 Copy `env.example` to `.env` and configure:
+
 - `BLOCKFROST_PROJECT_ID`: Blockfrost API project ID (first 7 chars determine network: `preview`, `preprod`, or `mainnet`)
 - `NEXT_PUBLIC_APP_NETWORK`: Network name for explorer links (must match Blockfrost network)
 
@@ -32,6 +33,7 @@ Copy `env.example` to `.env` and configure:
 Two-layer abstraction over Plutus V3 contract (`src/contract/plutus.json`):
 
 1. **MeshAdapter** (`src/contract/mesh.ts`): Base blockchain interaction layer
+
    - Initializes MeshTxBuilder with Blockfrost provider
    - Compiles and parameterizes marketplace Plutus script
    - Derives marketplace script address
@@ -44,6 +46,7 @@ Two-layer abstraction over Plutus V3 contract (`src/contract/plutus.json`):
    - `update()`: Update listing price by consuming old UTXO, creating new one
 
 All contract methods:
+
 - Build unsigned transactions using MeshTxBuilder
 - Use inline datums (V3 feature) for marketplace state
 - Require collateral UTXOs for script execution
@@ -54,6 +57,7 @@ All contract methods:
 All marketplace transactions follow this pattern:
 
 1. **API Route** (`src/app/api/tx/{action}/route.ts`):
+
    - Validates request (wallet address, asset, price)
    - Creates MeshWallet with address-only key (for UTXO queries, not signing)
    - Instantiates MarketplaceContract
@@ -72,6 +76,7 @@ This separates transaction building (server-side) from signing (client-side with
 ### Wallet Management
 
 Zustand store in `src/hooks/use-wallet.ts`:
+
 - Connects to browser wallet extensions (Nami, Eternl, Lace, etc.) via Mesh SDK
 - State: `browserWallet`, `walletName`, `address`
 - Methods: `connect()`, `disconnect()`, `signTx()`, `submitTx()`
@@ -90,6 +95,7 @@ Zustand store in `src/hooks/use-wallet.ts`:
 ### NFT Minting
 
 Self-contained flow in `src/app/mint/page.tsx`:
+
 - Generates random metadata from predefined IPFS CIDs (`src/app/mint/ipfs.ts`)
 - Creates native script with `ForgeScript.withOneSignature()`
 - Builds transaction with CIP-25 metadata (label 721) using MeshTxBuilder
@@ -108,6 +114,7 @@ src/components/
 ### Type Definitions
 
 Core types in `src/types/index.d.ts`:
+
 - `NFT`: Base type with unit, seller, price
 - `NFTExtended`: NFT with additional metadata fields
 
@@ -123,12 +130,14 @@ Core types in `src/types/index.d.ts`:
 ## Common Patterns
 
 **Working with transactions:**
+
 - Always validate wallet connection before transaction operations
 - Handle errors from both transaction building (API) and signing/submission (client)
 - Provide user feedback during async operations (loading states, success/error messages)
 - Use `useWallet` hook methods (`signTx`, `submitTx`) instead of directly accessing browserWallet
 
 **Adding new marketplace operations:**
+
 1. Add contract method to MarketplaceContract class
 2. Create API route handler following existing patterns
 3. Create UI component with client-side signing flow

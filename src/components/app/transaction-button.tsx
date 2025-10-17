@@ -14,7 +14,6 @@ interface TransactionButtonProps {
   action: TransactionAction;
   unit: string;
   className?: string;
-  variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
 }
 
 const actionConfig = {
@@ -44,7 +43,7 @@ const actionConfig = {
   },
 };
 
-export const TransactionButton = ({ action, unit, className, variant }: TransactionButtonProps) => {
+export const TransactionButton = ({ action, unit, className }: TransactionButtonProps) => {
   const { address, browserWallet: wallet } = useWallet();
   const [price, setPrice] = useState("");
   const [loading, setLoading] = useState(false);
@@ -101,7 +100,7 @@ export const TransactionButton = ({ action, unit, className, variant }: Transact
   if (!config.requiresPrice) {
     return (
       <>
-        <Button onClick={handleSubmit} className={cn(className)} variant={variant} disabled={loading}>
+        <Button onClick={handleSubmit} className={cn(className)} disabled={loading}>
           {loading ? "Create Transaction ..." : config.label}
         </Button>
         {error && <p className="text-red-500 text-sm">{error}</p>}
@@ -139,9 +138,7 @@ export const TransactionButton = ({ action, unit, className, variant }: Transact
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogTrigger asChild>
-        <Button className={cn(className)} variant={variant}>
-          {config.label}
-        </Button>
+        <Button className={cn(className)}>{config.label}</Button>
       </DialogTrigger>
       <DialogContent className="max-w-[425px]">
         {txhash === "" ? (

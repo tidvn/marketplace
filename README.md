@@ -24,6 +24,7 @@ npm run format
 ## Environment Setup
 
 Copy `env.example` to `.env` and configure:
+
 - `BLOCKFROST_PROJECT_ID`: Your Blockfrost API project ID (first 7 chars determine network: `preview`, `preprod`, or `mainnet`)
 - `NEXT_PUBLIC_APP_NETWORK`: Network name for explorer links (`preview`, `preprod`, or `mainnet`)
 
@@ -34,6 +35,7 @@ Copy `env.example` to `.env` and configure:
 The marketplace is built around a Plutus V3 smart contract (defined in `src/contract/plutus.json`). The contract logic is abstracted through two layers:
 
 1. **MeshAdapter** (`src/contract/mesh.ts`): Base class providing core blockchain interaction utilities
+
    - Initializes MeshTxBuilder with Blockfrost provider
    - Compiles and parameterizes the marketplace Plutus script
    - Derives the marketplace script address
@@ -46,6 +48,7 @@ The marketplace is built around a Plutus V3 smart contract (defined in `src/cont
    - `update()`: Updates listing price by consuming old UTXO and creating new one with updated datum
 
 All contract methods:
+
 - Build unsigned transactions using MeshTxBuilder
 - Use inline datums (V3 feature) for marketplace state
 - Require collateral UTXOs for script execution
@@ -54,6 +57,7 @@ All contract methods:
 ### Wallet Management
 
 State management uses Zustand store in `src/hooks/use-wallet.ts`:
+
 - Connects to browser wallet extensions (Nami, Eternl, Lace, etc.) via Mesh SDK
 - Stores: `browserWallet` (BrowserWallet instance), `walletName`, `address`
 - Methods: `connect()`, `disconnect()`, `signTx()`, `submitTx()`
@@ -64,6 +68,7 @@ State management uses Zustand store in `src/hooks/use-wallet.ts`:
 All marketplace transactions follow this pattern:
 
 1. **API Route Handler** (`src/app/api/tx/{action}/route.ts`):
+
    - Validates request (wallet address, asset, price, etc.)
    - Creates MeshWallet with address-only key (for UTXO queries, not signing)
    - Instantiates MarketplaceContract with wallet and blockfrost provider
@@ -82,11 +87,13 @@ This pattern separates transaction building (server-side) from signing (client-s
 ### Data Fetching
 
 - **Blockfrost Integration**: Singleton BlockfrostProvider in `src/lib/blockfrost.ts`
+
   - Used for querying blockchain data (UTXOs, assets, metadata)
   - Network determined from `BLOCKFROST_PROJECT_ID` prefix
   - Singleton pattern prevents multiple instances in development
 
 - **API Routes**: Next.js API routes in `src/app/api/`
+
   - `/api/listed-nfts`: Fetches all NFTs listed in marketplace contract address
   - `/api/specific-asset`: Gets details for a single asset by hex identifier
   - `/api/profile`: Gets user's owned NFTs
@@ -97,6 +104,7 @@ This pattern separates transaction building (server-side) from signing (client-s
 ### NFT Minting
 
 The minting flow (`src/app/mint/page.tsx`) is self-contained:
+
 - Generates random metadata from predefined IPFS CIDs (`src/app/mint/ipfs.ts`)
 - Creates native script with `ForgeScript.withOneSignature()`
 - Builds transaction with CIP-25 metadata (label 721) using MeshTxBuilder
@@ -116,6 +124,7 @@ src/components/
 ### Type Definitions
 
 Core types in `src/types/index.d.ts`:
+
 - `NFT`: Base type with unit, seller, price
 - `NFTExtended`: NFT with additional metadata fields
 
@@ -136,12 +145,14 @@ Core types in `src/types/index.d.ts`:
 ## Common Patterns
 
 When working with transactions:
+
 1. Always validate wallet connection before transaction operations
 2. Handle errors from both transaction building (API) and signing/submission (client)
 3. Provide user feedback during async operations (loading states, success/error messages)
 4. Use `useWallet` hook methods (`signTx`, `submitTx`) instead of directly accessing browserWallet
 
 When adding new marketplace operations:
+
 1. Add contract method to MarketplaceContract class
 2. Create API route handler following existing patterns
 3. Create UI component with client-side signing flow
